@@ -7,7 +7,7 @@ const camera = new THREE.OrthographicCamera(
     -d * aspect, d * aspect, d, -d, 1, 1000
 );
 
-// Set the position of the camera to an isometric angle
+// Initially set the camera position
 camera.position.set(20, 20, 20);
 camera.lookAt(scene.position); // Ensure the camera is looking at the center of the scene
 
@@ -70,6 +70,14 @@ function animate() {
             block.position.x += moveSpeed;
             block.position.z -= moveSpeed;
         }
+
+        // Update the camera position to follow the block
+        camera.position.set(
+            block.position.x + 20, // Offset camera position to maintain isometric view
+            block.position.y + 20,
+            block.position.z + 20
+        );
+        camera.lookAt(block.position); // Ensure the camera is always looking at the block
     }
 
     renderer.render(scene, camera);
